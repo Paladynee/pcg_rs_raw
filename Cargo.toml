@@ -1,0 +1,7 @@
+[package]
+name = "pcg_rs_raw"
+version = "0.1.0"
+edition = "2024"
+description = "raw translation of PCG from C"
+license = "Apache-2.0"
+repository = "https://github.com/Paladynee/pcg_rs_raw"
