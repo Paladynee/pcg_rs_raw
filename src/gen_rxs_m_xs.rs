@@ -108,7 +108,10 @@ pub const fn pcg_oneseq_128_rxs_m_xs_128_boundedrand_r(
     }
 }
 
-// no A_rxs_m_xs_8_random_r
+// no pcg_mcg_*_rxs_m_xs_*_random_r
+// no pcg_mcg_*_rxs_m_xs_*_boundedrand_r
+
+// no pcg_unique_8_rxs_m_xs_8_random_r
 // no pcg_unique_8_rxs_m_xs_8_boundedrand_r
 
 #[inline]

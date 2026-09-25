@@ -24,7 +24,7 @@
 //     http://www.pcg-random.org
 
 //! ## `pcg_rs_raw` - raw translation of the equivalent C library  
-//! 
+//!
 //! The single file C library has been translated line by line into Rust with equivalent semantics,
 //! additionally modularized into Rust modules that are documented. No additional changes were
 //! made to the library.
@@ -120,3 +120,86 @@ pub mod gen_xsl_rr_rr;
 ///
 /// visibility: public, avoid since they're not for Rust. use a crate wrapping this crate instead.
 pub mod typedefs;
+
+// Original functions from the C library.
+//
+// visibility: public, avoid since they are not for multithreaded applications. use a crate wrapping this crate instead.
+
+use crate::typedefs::pcg32_random_t;
+use crate::typedefs::pcg64_random_t;
+
+static mut pcg32_global: pcg32_random_t = PCG32_INITIALIZER!();
+
+/// # Safety
+///
+/// Single threaded only.
+#[expect(static_mut_refs)]
+pub const unsafe fn pcg32_random() -> u32 {
+    unsafe { pcg32_random_r!()(&mut pcg32_global) }
+}
+
+/// # Safety
+///
+/// Single threaded only.
+#[expect(static_mut_refs)]
+pub const unsafe fn pcg32_boundedrand(bound: u32) -> u32 {
+    unsafe { pcg32_boundedrand_r!()(&mut pcg32_global, bound) }
+}
+
+/// # Safety
+///
+/// Single threaded only.
+#[expect(static_mut_refs)]
+pub const unsafe fn pcg32_srandom(seed: u64, seq: u64) {
+    unsafe {
+        pcg32_srandom_r!()(&mut pcg32_global, seed, seq);
+    }
+}
+
+/// # Safety
+///
+/// Single threaded only.
+#[expect(static_mut_refs)]
+pub const unsafe fn pcg32_advance(delta: u64) {
+    unsafe {
+        pcg32_advance_r!()(&mut pcg32_global, delta);
+    }
+}
+
+static mut pcg64_global: pcg64_random_t = PCG64_INITIALIZER!();
+
+/// # Safety
+///
+/// Single threaded only.
+#[expect(static_mut_refs)]
+pub const unsafe fn pcg64_random() -> u64 {
+    unsafe { pcg64_random_r!()(&mut pcg64_global) }
+}
+
+/// # Safety
+///
+/// Single threaded only.
+#[expect(static_mut_refs)]
+pub const unsafe fn pcg64_boundedrand(bound: u64) -> u64 {
+    unsafe { pcg64_boundedrand_r!()(&mut pcg64_global, bound) }
+}
+
+/// # Safety
+///
+/// Single threaded only.
+#[expect(static_mut_refs)]
+pub const unsafe fn pcg64_srandom(seed: u128, seq: u128) {
+    unsafe {
+        pcg64_srandom_r!()(&mut pcg64_global, seed, seq);
+    }
+}
+
+/// # Safety
+///
+/// Single threaded only.
+#[expect(static_mut_refs)]
+pub const unsafe fn pcg64_advance(delta: u128) {
+    unsafe {
+        pcg64_advance_r!()(&mut pcg64_global, delta);
+    }
+}
